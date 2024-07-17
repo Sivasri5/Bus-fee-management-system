@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Payment Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        input[type="text"] {
+            margin-right: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        #studentList {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #studentList th, #studentList td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #studentList th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+
+        #studentList tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #studentList tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <label for="busNo">Enter Bus Number:</label>
+    <input type="text" id="busNo">
+    <button onclick="showStudents()">Show Students</button>
+    <table id="studentList">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Roll No</th>
+                <th>Paid</th>
+            </tr>
+        </thead>
+        <tbody id="studentListBody"></tbody>
+    </table>
+
+    <script>
+        const students = [
+            { name: 'Swetha R', rollNo: '22CSR218', busNo: '04', paid: true },
+            { name: 'Sivasri R', rollNo: '22CSR200', busNo: '04', paid: false },
+            { name: 'Vigneshwaran B', rollNo: '22CSR235', busNo: '96', paid: true },
+            { name: 'Vishnupriya R', rollNo: '22CSR243', busNo: '96', paid: true },
+            // Add more students as needed
+        ];
+
+        function showStudents() {
+            const busNoInput = document.getElementById('busNo').value;
+            const studentListContainer = document.getElementById('studentListBody');
+            studentListContainer.innerHTML = ''; // Clear previous results
+
+            const studentsInBus = students.filter(student => student.busNo === busNoInput);
+            if (studentsInBus.length > 0) {
+                const limitedStudents = studentsInBus.slice(0, 5);
+                limitedStudents.forEach(student => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${student.name}</td>
+                        <td>${student.rollNo}</td>
+                        <td>${student.paid ? 'Yes' : 'No'}</td>`;
+                    studentListContainer.appendChild(row);
+                });
+            } else {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="3">No students found for the entered bus number.</td>';
+                studentListContainer.appendChild(row);
+            }
+        }
+    </script>
+</body>
+</html>

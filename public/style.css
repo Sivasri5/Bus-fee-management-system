@@ -1,0 +1,87 @@
+body{
+    background-image:url("buspic.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px); 
+  
+}
+.contain{
+    display: flex;
+    padding:100px;
+}
+.stu{
+    flex:1;
+    border-style: outset;
+    border-width: 15px;
+  padding:20px 15px;
+  
+   
+}
+
+.adm{
+    flex:1;
+    border-style: outset;
+    border-width: 15px;
+    padding: 20px 15px;
+    
+}
+
+.stu img{
+    position: absolute;
+    top: 60%;
+    left: 30%;
+    transform: translate(-50%, -50%); 
+}
+
+.adm img{
+    top: 80%;
+    left: 80%;
+    transform: translate(30%, -10%); 
+}
+
+
+.container
+{
+    border:1px solid;
+    padding:5px;
+    max-width:500px;
+}
+
+button{
+    margin-left:180px;
+}
+
+#choco
+{
+   width:350px;
+   margin-left: 60px;
+}
+
+.con
+{
+    margin-top:10px;
+    padding-left:200px;
+    font-size:larger;
+}
+
+#a 
+{
+    color:red;
+}
+
+#c
+{
+    color:black;
+}
+
+.rem
+{
+   margin-left: 50px;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.0);
+     /* Adjust the scale factor to reduce the size */
+}

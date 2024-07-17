@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+</head>
+<body>
+    <h2><center>Receipt</center></h2>
+    <div id="receiptData"></div>
+    <button onclick="downloadReceipt()"><center>Download Receipt</center></button>
+
+
+    <script>
+        // Retrieve form data from localStorage
+        var formData = JSON.parse(localStorage.getItem("receiptData"));
+
+        // Display receipt data
+        var receiptDataElement = document.getElementById("receiptData");
+        receiptDataElement.innerHTML = `
+        <style>
+            body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .receipt-container {
+            margin: 20px auto;
+            max-width: 600px;
+            border: 2px solid #000;
+            padding: 40px;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .receipt-header h2 {
+            margin: 0;
+            color: #333;
+        }
+        .receipt-info {
+            margin-bottom: 20px;
+        }
+        .receipt-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .receipt-info strong {
+            margin-right: 10px;
+            color: #000;
+        }
+        .download-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .download-button:hover {
+            background-color: #0056b3;
+        }
+        </style>
+        <div class="receipt-container">
+            <div class="receipt-header">
+                <h2>Fee Receipt</h2>
+            </div>
+            <div class="receipt-info">
+                 <div style="margin: 0 auto; width: 80%;">
+                <p><strong>Full Name:</strong> ${formData.fullName}</p>
+                <p><strong>Roll No:</strong> ${formData.rollno}</p>
+                <p><strong>Email:</strong> ${formData.email}</p>
+                <p><strong>Year:</strong> ${formData.year}</p>
+                <p><strong>Address:</strong> ${formData.address}</p>
+                <p><strong>Stopping:</strong> ${formData.stopping}</p>
+                <p><strong>Zip:</strong> ${formData.zip}</p>
+                <p><strong>Amount:</strong> ${formData.amount}</p>
+                <p><strong>Transaction Date:</strong> ${formData.date}</p>
+            </div>
+        </div>
+        `;
+
+        // Clear localStorage after displaying receipt
+        localStorage.removeItem("receiptData");
+
+        function downloadReceipt() {
+            var data = JSON.stringify(formData);
+            var blob = new Blob([data], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'receipt_details.json';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

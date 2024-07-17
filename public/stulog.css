@@ -1,0 +1,76 @@
+*
+{
+    margin:0%;
+    padding:0%;
+    box-sizing:border-box;
+}
+
+.form-box
+{
+    margin: 100px;
+    border:1px solid;
+    padding:5px;
+    max-width:500px;
+}
+
+button{
+    margin-left:180px;
+}
+
+#choco
+{
+   width:420px;
+   margin-left: 30px;
+}
+
+.con
+{
+    margin-top:10px;
+    padding:10px;
+    font-size:50px;
+    display:flex;
+    justify-content: space-around;
+}
+
+#a 
+{
+    color:red;
+}
+
+#c
+{
+    color:black;
+}
+
+.rem
+{
+   margin-left: 50px;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.0);
+     
+}
+
+.form-header
+{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.login{
+    margin-left: 30px;
+}
+
+.connect-line {
+    text-align: center;
+    border-top: 0.5px solid black;
+    line-height: 0.1em;
+    margin: 10px 0;
+}
+
+.connect-line span {
+    background: white;
+    padding: 0 10px;
+}
+

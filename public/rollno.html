@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Payment Status</title>
+</head>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 200px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <label for="rollNo">Enter Roll Number:</label>
+        <input type="text" id="rollNo">
+        <button onclick="checkPayment()">Check Payment Status</button>
+        <p id="paymentStatus"></p>
+    </div>
+</style>
+<body>
+
+    <script>
+        // Simulated database of users and their payment status
+        const users = [
+            { rollNo: '22CSR235', paid: true },
+            { rollNo: '22CSR243', paid: false },
+            { rollNo: '22CSR200', paid: true },
+            { rollNo: '22CSR218', paid: true },
+            // Add more users as needed
+        ];
+
+        function checkPayment() {
+            const rollNoInput = document.getElementById('rollNo').value;
+            const user = users.find(u => u.rollNo === rollNoInput);
+
+            if (user) {
+                if (user.paid) {
+                    document.getElementById('paymentStatus').innerText = 'Payment status: Paid';
+                } else {
+                    document.getElementById('paymentStatus').innerText = 'Payment status: Not paid';
+                }
+            } else {
+                document.getElementById('paymentStatus').innerText = 'Roll number not found';
+            }
+        }
+    </script>
+</body>
+</html>

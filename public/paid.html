@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Payment Status</title>
+    <style>
+        /* CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        input[type="text"] {
+            margin-right: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .button-container button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Check Payment Status by Place Name</h2>
+    <form>
+        <label for="placeName">Enter Place Name:</label>
+        <input type="text" id="placeName">
+        <button onclick="showStudentsByPlace(event)">Show Students</button>
+    </form>
+    <div class="button-container">
+        <label>Show:</label>
+        <button onclick="toggleStudents('paid')">Paid</button>
+        <button onclick="toggleStudents('unpaid')">Unpaid</button>
+    </div>
+    <table id="studentListByPlace">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Roll No</th>
+                <th>Paid</th>
+            </tr>
+        </thead>
+        <tbody id="studentListByPlaceBody"></tbody>
+    </table>
+
+    <script>
+        // Simulated database of students, their place names, and payment status
+        const students = [
+            { name: 'Swetha R', rollNo: '22CSR218', placeName: 'Chennai', paid: true },
+            { name: 'Sivasri R', rollNo: '22CSR200', placeName: 'Madurai', paid: false },
+            { name: 'Vigneshwaran B', rollNo: '22CSR235', placeName: 'Chennai', paid: true },
+            { name: 'Vishnupriya R', rollNo: '22CSR243', placeName: 'Coimbatore', paid: true },
+            // Add more students as needed
+        ];
+
+        function showStudentsByPlace(event) {
+            event.preventDefault(); // Prevent form submission
+            const placeNameInput = document.getElementById('placeName').value;
+            const studentListContainer = document.getElementById('studentListByPlaceBody');
+            studentListContainer.innerHTML = ''; // Clear previous results
+
+            const studentsInPlace = students.filter(student => student.placeName.toLowerCase() === placeNameInput.toLowerCase());
+            if (studentsInPlace.length > 0) {
+                studentsInPlace.forEach(student => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${student.name}</td>
+                        <td>${student.rollNo}</td>
+                        <td>${student.paid ? 'Yes' : 'No'}</td>`;
+                    studentListContainer.appendChild(row);
+                });
+            } else {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="3">No students found for the entered place name.</td>';
+                studentListContainer.appendChild(row);
+            }
+        }
+
+        function toggleStudents(status) {
+            const placeNameInput = document.getElementById('placeName').value.toLowerCase();
+            const studentListContainer = document.getElementById('studentListByPlaceBody');
+            studentListContainer.innerHTML = ''; // Clear previous results
+
+            const filteredStudents = students.filter(student => 
+                student.placeName.toLowerCase() === placeNameInput && 
+                (status === 'paid' ? student.paid : !student.paid)
+            );
+
+            if (filteredStudents.length > 0) {
+                filteredStudents.forEach(student => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${student.name}</td>
+                        <td>${student.rollNo}</td>
+                        <td>${student.paid ? 'Yes' : 'No'}</td>`;
+                    studentListContainer.appendChild(row);
+                });
+            } else {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="3">No ${status === 'paid' ? 'paid' : 'unpaid'} students found for the entered place name.</td>`;
+                studentListContainer.appendChild(row);
+            }
+        }
+    </script>
+</body>
+</html>
