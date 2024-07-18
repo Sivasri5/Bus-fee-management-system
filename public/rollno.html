@@ -4,24 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check Payment Status</title>
-</head>
-<style>
+    <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            background-color: #f8f9fa;
         }
 
         .container {
             width: 80%;
             margin: 50px auto;
             text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
 
         label {
             display: block;
             margin-bottom: 10px;
+            font-weight: bold;
         }
 
         input[type="text"] {
@@ -30,6 +35,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             margin-bottom: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
         button {
@@ -39,52 +45,68 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
         button:hover {
             background-color: #0056b3;
         }
 
-        p {
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
             margin-top: 20px;
-            font-size: 18px;
+            text-align: left;
+            display: none; /* Initially hide the card */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .card p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .card p strong {
+            color: #007bff;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <label for="rollNo">Enter Roll Number:</label>
-        <input type="text" id="rollNo">
-        <button onclick="checkPayment()">Check Payment Status</button>
-        <p id="paymentStatus"></p>
+        <form id="paymentForm">
+            <label for="rollNo">Enter Roll Number:</label>
+            <input type="text" id="rollNo" name="rollNo" placeholder="e.g., 123456">
+            <button type="submit">Check Payment Status</button>
+        </form>
+        <div id="paymentStatus" class="card">
+            <!-- Payment status details will be inserted here -->
+        </div>
     </div>
-</style>
-<body>
 
     <script>
-        // Simulated database of users and their payment status
-        const users = [
-            { rollNo: '22CSR235', paid: true },
-            { rollNo: '22CSR243', paid: false },
-            { rollNo: '22CSR200', paid: true },
-            { rollNo: '22CSR218', paid: true },
-            // Add more users as needed
-        ];
+        document.getElementById('paymentForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const rollno = document.getElementById('rollNo').value;
+            console.log(rollno);
 
-        function checkPayment() {
-            const rollNoInput = document.getElementById('rollNo').value;
-            const user = users.find(u => u.rollNo === rollNoInput);
+            const response = await fetch('/checkPayment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ rollno })
+            });
 
-            if (user) {
-                if (user.paid) {
-                    document.getElementById('paymentStatus').innerText = 'Payment status: Paid';
-                } else {
-                    document.getElementById('paymentStatus').innerText = 'Payment status: Not paid';
-                }
-            } else {
-                document.getElementById('paymentStatus').innerText = 'Roll number not found';
-            }
-        }
+            const data = await response.text(); // Assuming server responds with HTML
+            console.log(data);
+
+            // Update the paymentStatus div with the received HTML
+            document.getElementById('paymentStatus').innerHTML = data;
+            document.getElementById('paymentStatus').style.display = 'block'; // Show the card
+        });
     </script>
 </body>
 </html>

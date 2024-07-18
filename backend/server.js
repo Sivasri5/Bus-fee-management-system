@@ -2,6 +2,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import payRouter from './routes/userroutes.js';
 import {User,Pay} from './models/schema.js';
 
@@ -17,7 +18,7 @@ mongoose.connect(process.env.MONGODB_URL)
 
 const app = express();
 
-
+app.use(cors());
 app.use(express.static('C:/Users/SOWMIKA/OneDrive/Desktop/fresh/public'));
 
 app.use(express.json());
@@ -46,6 +47,27 @@ app.post('/signup/signup', async (req, res) => {
   } catch (error) {
     console.error('Error creating user:', error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/checkPayment', async (req, res) => {
+  const { rollno } = req.body;
+  console.log(req.body);
+  const pay = await Pay.findOne({ rollno });
+  console.log(pay);
+
+  if (pay) {
+    // Render payment status directly in HTML format
+    res.send(`
+      <p>Payment status: Paid</p>
+      <p>Name: ${pay.fullName}</p>
+      <p>Transaction Date: ${pay.date}</p>
+      <p>Address: ${pay.address}</p>
+    `);
+  } else {
+    res.send(`
+      <p>No payment found for Roll Number: ${rollno}</p>
+    `);
   }
 });
 
