@@ -72,6 +72,41 @@ app.post('/checkPayment', async (req, res) => {
 });
 
 
+app.post('/checkPay_place', async (req, res) => {
+  const { address } = req.body; // Get placeName from the request body
+  console.log(req.body);
+  
+  try {
+    // Find payments by placeName
+    const payments = await Pay.find({ address });
+    console.log(address);
+
+    if (payments.length > 0) {
+      // Construct HTML content for the response
+      let responseHtml = '<h2>Payment Status:</h2>';
+      payments.forEach(payment => {
+        responseHtml += `
+          <div>
+            <p><strong>Name:</strong> ${payment.fullName}</p>
+            <p><strong>Transaction Date:</strong> ${payment.date}</p>
+            <p><strong>Address:</strong> ${payment.address}</p>
+            <hr>
+          </div>
+        `;
+      });
+
+      res.send(responseHtml);
+    } else {
+      res.send(`
+        <p>No payments found for Place Name: ${address}</p>
+      `);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('<p>Internal Server Error</p>');
+  }
+});
+
 const port = process.env.PORT || 5051;
 app.listen(port, () => {
   console.log(`serve at http://localhost:${port}`);
