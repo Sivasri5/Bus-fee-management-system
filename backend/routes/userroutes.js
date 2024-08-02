@@ -5,9 +5,9 @@ const payRouter = express.Router();
 
 payRouter.post('/', async (req, res) => {
     try {
-      const { fullName, rollno, email, year, address, stop, zip, date } = req.body;
+      const { fullName, rollno, email, year, bus_no, address, stop, zip, cardHolderName, date } = req.body;
   
-      const newPay = new Pay({ fullName, rollno, email, year, address, stop, zip, date });
+      const newPay = new Pay({ fullName, rollno, email, year, bus_no, address, stop, zip, cardHolderName, date });
   
       await newPay.save();
       console.log('Payment details saved successfully.');
@@ -25,9 +25,11 @@ payRouter.post('/', async (req, res) => {
           <p><strong>Roll Number:</strong> ${rollno}</p>
           <p><strong>Email:</strong> ${email}</p>
           <p><strong>Year of Study:</strong> ${year}</p>
+          <p><strong>Bus_No:</strong> ${bus_no}</p>
           <p><strong>Address:</strong> ${address}</p>
           <p><strong>Stopping:</strong> ${stop}</p>
           <p><strong>Zip Code:</strong> ${zip}</p>
+          <p><strong>Zip Code:</strong> ${cardHolderName}</p>
           <p><strong>Transaction Date:</strong> ${date}</p>
           <!-- You can include more payment details here -->
         </body>

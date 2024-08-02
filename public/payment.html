@@ -4,187 +4,209 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0; 
+            padding: 0;
+            box-sizing: border-box;
+            outline: none; 
+            border: none;
+            text-transform: capitalize;
+            transition: all .2s linear;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            height: 100vh;
+            background: linear-gradient(90deg, #2ecc71 60%, #27ae60 40.1%);
+            overflow: hidden;
+        }
+
+        .container form {
+            padding: 15px;
+            width: 80%;
+            max-width: 600px;
+            background: #fff;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+        }
+
+        .container form .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .container form .row .col {
+            flex: 1 1 220px;
+        }
+
+        .container form .row .col .title {
+            font-size: 18px;
+            color: #333;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .container form .row .col .inputBox {
+            margin: 10px 0;
+        }
+
+        .container form .row .col .inputBox span {
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .container form .row .col .inputBox input {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 8px 10px;
+            font-size: 14px;
+            text-transform: none;
+        }
+
+        .container form .row .col .inputBox input:focus {
+            border: 1px solid #000;
+        }
+
+        .container form .row .col .flex {
+            display: flex;
+            gap: 10px;
+        }
+
+        .container form .row .col .flex .inputBox {
+            margin-top: 5px;
+        }
+
+        .container form .row .col .inputBox img {
+            height: 30px;
+            margin-top: 5px;
+            filter: drop-shadow(0 0 1px #000);
+        }
+
+        .container form .submit-btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background: #27ae60;
+            color: #fff;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .container form .submit-btn:hover {
+            background: #2ecc71;
+        }
+
+        #qrcode {
+            width: 150px;
+            height: 150px;
+            border: 1px solid #000;
+        }
+
+        h4 {
+            font-size: 14px;
+        }
+    </style>
 </head>
-<style>
-
-*{
-    font-family: 'Poppins', sans-serif;
-    margin:0; padding:0;
-    box-sizing: border-box;
-    outline: none; border: none;
-    text-transform:capitalize;
-    transition: all .2s linear;
-}
-    .container{
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    padding:25px;
-    min-height:100vh;
-    background:linear-gradient(90deg, #2ecc71 60%, #27ae60 40.1%);
-    padding-bottom:70px;
-}
-
-.container form{
-    padding:20px;
-    width:700px;
-    background:#fff;
-    box-shadow: 0 5px 10px rgba(0,0,0,.1);
-}
-
-.container form .row{
-    display: flex;
-    flex-wrap: wrap;
-    gap:15px;
-}
-
-.container form .row .col{
-    flex:1 1 250px;
-}
-
-.container form .row .col .title{
-    font-size: 20px;
-    color:#333;
-    padding-bottom: 5px;
-    text-transform: uppercase;
-}
-
-.container form .row .col .inputBox{
-    margin:15px 0;
-}
-
-.container form .row .col .inputBox span{
-    margin-bottom:10px;
-    display: block;
-}
-
-.container form .row .col .inputBox input{
-    width:100%;
-    border:1px solid #ccc;
-    padding:10px 15px;
-    font-size: 15px;
-    text-transform:none;
-}
-
-.container form .row .col .inputBox input:focus{
-    border:1px solid #000;
-}
-
-.container form .row .col .flex{
-    display: flex;
-    gap:15px;
-}
-
-.container form .row .col .flex .inputBox{
-    margin-top: 5px;
-}
-
-.container form .row .col .inputBox img{
-    height: 34px;
-    margin-top: 5px;
-    filter: drop-shadow(0 0 1px #000);
-}
-
-.container form .submit-btn{
-    width:100%;
-    padding:12px;
-    font-size: 17px;
-    background: #27ae60;
-    color:#fff;
-    margin-top: 5px;
-    cursor: pointer;
-}
-
-.container form .submit-btn:hover{
-    background: #2ecc71;
-}
-
-#qrcode {
-    width: 200px;
-    height: 200px;
-    border: 1px solid #000;
-}
-
-</style>
 <body>
-    <div class="content" id="formContent" >
-        <div class="container" id="formContainer">
-            <form action="/pay" method="POST">
+    <div class="container">
+        <form action="/pay" method="POST">
             <div class="row">
-              <div class="col">
-                <h3 class="title">Billing address</h3>
-      
-                <div class="inputBox">
-                  <span>Full name :</span>
-                  <input type="text" placeholder="name" id="fullName" name="fullName">
+                <div class="col">
+                    <h3 class="title">Billing address</h3>
+
+                    <div class="inputBox">
+                        <span>Full name :</span>
+                        <input type="text" placeholder="name" id="fullName" name="fullName">
+                    </div>
+
+                    <div class="inputBox">
+                        <span>Roll Number :</span>
+                        <input type="text" placeholder="roll number" id="rollno" name="rollno">
+                    </div>
+
+                    <div class="inputBox">
+                        <span>Email :</span>
+                        <input type="email" placeholder="abc@def.com" id="email" name="email">
+                    </div>
+
+                    <div class="inputBox">
+                        <span>Year of study :</span>
+                        <input type="text" placeholder="year" id="year" name="year">
+                    </div>
+
+                    <div class="inputBox">
+                        <span>Bus No :</span>
+                        <input type="text" placeholder="bus_no" id="bus_no" name="bus_no">
+                    </div>
+
+                    <div class="inputBox">
+                        <span>Address :</span>
+                        <input type="text" placeholder="street -locality" id="address" name="address">
+                    </div>
+                    <div class="inputBox">
+                        <span>Stopping :</span>
+                        <input type="text" placeholder="Erode" id="stopping" name="stop">
+                    </div>
+
+                    <div class="inputBox">
+                        <span>Zip code :</span>
+                        <input type="text" placeholder="123 456" id="zip" name="zip">
+                    </div>
                 </div>
 
-                <div class="inputBox">
-                  <span>Roll Number :</span>
-                  <input type="text" placeholder="roll number" id="rollno" name="rollno">
-                </div>
+                <div class="col">
+                    <h3 class="title">Payment</h3>
+                    <div class="inputBox">
+                        <span>Cards accepted :</span>
+                        <img src="/rtgs.png" alt="" width="80" height="60">
+                        <img src="/upi_icon.png" alt="" width="80" height="60">
+                        <img src="/creditcard.png" alt="" width="80" height="60">
+                    </div>
 
-                <div class="inputBox">
-                  <span>Email :</span>
-                  <input type="email" placeholder="abc@def.com" id="email" name="email">
-                </div>
-      
-                <div class="inputBox">
-                  <span>Year of study :</span>
-                  <input type="text" placeholder="year" id="year" name="year">
-                </div>
-      
-                <div class="inputBox">
-                  <span>Address :</span>
-                  <input type="text" placeholder="street -locality" id="address" name="address">
-                </div>
-                <div class="inputBox">
-                  <span> Stopping :</span>
-                  <input type="text" placeholder="Erode" id="stopping" name="stop">
-                </div>
-      
-                <div class="inputBox">
-                  <span> Zip code :</span>
-                  <input type="text" placeholder="123 456" id="zip" name="zip">
-                </div>
-              </div>
-      
-              <div class="col">
-                <h3 class="title">Payment</h3>
-                <div class="inputBox">
-                  <span>Cards accepted :</span>
-                  <img src="/rtgs.png" alt="" width="100" height="80" >
-                  <img src="/upi_icon.png" alt="" width="100" height="80" >
-                  <img src="/creditcard.png" alt="" width="100" height="80" >
-                </div>
+                    <div class="inputBox">
+                        <span>Card Number :</span>
+                        <input type="number" id="cardNumber" name="cardNumber">
+                    </div>
 
-                <div class="inputBox">
-                  <span>Card Number :</span>
-                  <input type="number" id="date" name="date">
-                </div>  
+                    <div class="inputBox">
+                        <span>Card Holder Name :</span>
+                        <input type="text" id="cardHolderName" name="cardHolderName">
+                    </div>
 
-                <div class="inputBox">
-                  <span>Card Holder Name :</span>
-                  <input type="text" id="date" name="date">
-                </div>  
-      
-                <div class="inputBox">
-                  <span>Amount :</span>
-                  <input type="text" placeholder="10000" id="amount" name="amount" readonly>
-                </div>  
+                    <div class="inputBox">
+                        <span>Expiration :</span>
+                        <input type="number" id="expire" name="expire" placeholder="MM/YY">
+                    </div>
 
-                <div class="inputBox">
-                  <span>Transaction Date :</span>
-                  <input type="date" id="date" name="date">
-                </div>  <br>
-              
-                <h4>Don't forget to download the reciept after the payment done successfully</h4>
+                    <div class="inputBox">
+                        <span>CVC :</span>
+                        <input type="number" id="cvc" name="cvc" placeholder="3 or 4 digit number">
+                    </div>
 
-              </div>
+                    <div class="inputBox">
+                        <span>Amount :</span>
+                        <input type="text" placeholder="10000" id="amount" name="amount" readonly>
+                    </div>
+
+                    <div class="inputBox">
+                        <span>Transaction Date :</span>
+                        <input type="date" id="date" name="date">
+                    </div> 
+                    <br>
+                    <h4>Don't forget to download the reciept after the payment is done successfully</h4>
+                </div>
             </div>
             <input type="submit" value="submit" class="submit-btn" id="submit">
-          </form>
-        </div>
-      </div>
+        </form>
+    </div>
 </body>
 </html>

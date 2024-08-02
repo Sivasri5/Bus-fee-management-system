@@ -33,9 +33,11 @@ const pay =new mongoose.Schema({
   rollno: {type: String, required: true},
   email: {type:String, required: true},
   year: {type:String, required: true},
+  bus_no: {type:String, required: true},
   address: {type:String, required: true},
   stop: {type:String, required: true},
   zip: {type:Number, required:true},
+  cardHolderName: {type:String, required:true},
   date: {type:String, required:true}
 })
 
