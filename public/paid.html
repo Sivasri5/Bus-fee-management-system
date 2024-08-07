@@ -58,7 +58,7 @@
             padding: 20px;
             margin-top: 20px;
             text-align: left;
-            display: none; /* Initially hide the card */
+            display: none; 
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             background-color: #fff;
         }
@@ -100,14 +100,12 @@
                 body: JSON.stringify({ address })
             });
 
-            const data = await response.text(); // Assuming server responds with HTML
+            const data = await response.text(); 
             console.log(data);
 
-            // Update the paymentStatus div with the received HTML
             document.getElementById('paymentStatus').innerHTML = data;
-            document.getElementById('paymentStatus').style.display = 'block'; // Show the card
+            document.getElementById('paymentStatus').style.display = 'block'; 
         });
     </script>
 </body>
 </html>
-

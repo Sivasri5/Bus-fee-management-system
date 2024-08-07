@@ -57,7 +57,7 @@ app.post('/checkPayment', async (req, res) => {
   console.log(pay);
 
   if (pay) {
-    // Render payment status directly in HTML format
+    
     res.send(`
       <p>Payment status: Paid</p>
       <p>Name: ${pay.fullName}</p>
@@ -73,16 +73,14 @@ app.post('/checkPayment', async (req, res) => {
 
 
 app.post('/checkPay_place', async (req, res) => {
-  const { address } = req.body; // Get placeName from the request body
+  const { address } = req.body; 
   console.log(req.body);
   
   try {
-    // Find payments by placeName
     const payments = await Pay.find({ address });
     console.log(address);
 
     if (payments.length > 0) {
-      // Construct HTML content for the response
       let responseHtml = '<h2>Payment Status:</h2>';
       payments.forEach(payment => {
         responseHtml += `
@@ -106,6 +104,41 @@ app.post('/checkPay_place', async (req, res) => {
     res.status(500).send('<p>Internal Server Error</p>');
   }
 });
+
+
+app.post('/checkPay_bus', async (req, res) => {
+  const { bus_no } = req.body; 
+  console.log(req.body);
+  
+  try {
+      const students = await Pay.find({ bus_no });
+      console.log(bus_no);
+
+      if (students.length > 0) {
+          let responseHtml = '<h2>Payment Status for Bus No: ' + bus_no + '</h2>';
+          students.forEach(student => {
+              responseHtml += `
+                  <div>
+                      <p><strong>Name:</strong> ${student.fullName}</p>
+                      <p><strong>Roll No:</strong> ${student.rollno}</p>
+                      <p><strong>Paid:</strong> ${student.paid ? 'Yes' : 'No'}</p>
+                      <hr>
+                  </div>
+              `;
+          });
+
+          res.send(responseHtml);
+      } else {
+          res.send(`
+              <p>No students found for Bus Number: ${bus_no}</p>
+          `);
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).send('<p>Internal Server Error</p>');
+  }
+});
+
 
 const port = process.env.PORT || 5051;
 app.listen(port, () => {

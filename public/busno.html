@@ -7,99 +7,105 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
 
         label {
-            margin-right: 10px;
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
 
         input[type="text"] {
-            margin-right: 10px;
-            padding: 5px;
+            width: 200px;
+            padding: 8px;
             border: 1px solid #ccc;
-            border-radius: 3px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
         button {
-            padding: 5px 10px;
+            padding: 10px 20px;
             background-color: #007bff;
             color: #fff;
             border: none;
-            border-radius: 3px;
+            border-radius: 5px;
             cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
-        #studentList {
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
             margin-top: 20px;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        #studentList th, #studentList td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-
-        #studentList th {
-            background-color: #f2f2f2;
             text-align: left;
+            display: none; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
         }
 
-        #studentList tr:nth-child(even) {
-            background-color: #f2f2f2;
+        .card p {
+            margin: 10px 0;
+            font-size: 16px;
         }
 
-        #studentList tr:hover {
-            background-color: #ddd;
+        .card p strong {
+            color: #007bff;
         }
     </style>
 </head>
 <body>
-    <label for="busNo">Enter Bus Number:</label>
-    <input type="text" id="busNo">
-    <button onclick="showStudents()">Show Students</button>
-    <table id="studentList">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Roll No</th>
-                <th>Paid</th>
-            </tr>
-        </thead>
-        <tbody id="studentListBody"></tbody>
-    </table>
+    <div class="container">
+        <form id="paymentForm">
+            <label for="bus_no">Enter Bus Number:</label>
+            <input type="text" id="bus_no" name="bus_no" placeholder="e.g., 04">
+            <button type="submit">Check Payment Status</button>
+        </form>
+        <div id="paymentStatus" class="card">
+            <!-- Payment status details will be inserted here -->
+        </div>
+    </div>
 
     <script>
-        const students = [
-            { name: 'Swetha R', rollNo: '22CSR218', busNo: '04', paid: true },
-            { name: 'Sivasri R', rollNo: '22CSR200', busNo: '04', paid: false },
-            { name: 'Vigneshwaran B', rollNo: '22CSR235', busNo: '96', paid: true },
-            { name: 'Vishnupriya R', rollNo: '22CSR243', busNo: '96', paid: true },
-            // Add more students as needed
-        ];
+        document.getElementById('paymentForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const bus_no = document.getElementById('bus_no').value;
+            console.log(bus_no);
 
-        function showStudents() {
-            const busNoInput = document.getElementById('busNo').value;
-            const studentListContainer = document.getElementById('studentListBody');
-            studentListContainer.innerHTML = ''; // Clear previous results
+            const response = await fetch('/checkPay_bus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ bus_no })
+            });
 
-            const studentsInBus = students.filter(student => student.busNo === busNoInput);
-            if (studentsInBus.length > 0) {
-                const limitedStudents = studentsInBus.slice(0, 5);
-                limitedStudents.forEach(student => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${student.name}</td>
-                        <td>${student.rollNo}</td>
-                        <td>${student.paid ? 'Yes' : 'No'}</td>`;
-                    studentListContainer.appendChild(row);
-                });
-            } else {
-                const row = document.createElement('tr');
-                row.innerHTML = '<td colspan="3">No students found for the entered bus number.</td>';
-                studentListContainer.appendChild(row);
-            }
-        }
+            const data = await response.text();
+            console.log(data);
+
+            document.getElementById('paymentStatus').innerHTML = data;
+            document.getElementById('paymentStatus').style.display = 'block'; 
+        });
     </script>
 </body>
 </html>
